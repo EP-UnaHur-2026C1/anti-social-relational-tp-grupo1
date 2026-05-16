@@ -10,15 +10,19 @@ Representa a un usuario de la plataforma.
 
 | Campo | Tipo | Descripción |
 |-------|------|-------------|
-| `id` | INTEGER | Clave primaria, autoincremental |
-| `nombre` | STRING | Nombre del usuario |
+| `id` | INTEGER | Clave primaria, autoincremental | Unico
+| `nickname` | STRING | Nombre del usuario | Unico
+| `email` | STRING | Email del usuario | Unico
+| `password`| STRING | Contraseña del usuario
 
 ### Ejemplo
 
 ```json
 {
   "id": 1,
-  "nombre": "Juan Perez"
+  "nickName": "Juan Perez",
+  "email": "juanperez@gmail.com",
+  "password": "juanperez123"
 }
 ```
 
@@ -79,7 +83,7 @@ Representa una etiqueta/categoría para posts.
 | Campo | Tipo | Descripción |
 |-------|------|-------------|
 | `id` | INTEGER | Clave primaria, autoincremental |
-| `nombre` | STRING | Nombre de la etiqueta |
+| `nombre` | STRING | Nombre de la etiqueta | Unico
 
 ### Ejemplo
 
