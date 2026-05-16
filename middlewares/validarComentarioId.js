@@ -8,7 +8,7 @@ const validarComentarioIdConPostYUsuario = async (req, res, next) => {
             include: [{
                 model: Post,
                 as: "post",
-                attributes: ["texto", 'contenido', "fecha"]
+                attributes: ["titulo", 'contenido', "fecha"]
             },
             {
                 model: Usuario,
