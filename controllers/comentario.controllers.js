@@ -25,51 +25,73 @@ const obtenerComentarios = async (req, res) => {
 }
 
 const obtenerComentario = async (req, res) => {
-    try {
-
-    } catch (error) {
-        res.status(500).json({
-            error: error.message,
-        })
-    }
+    const comentario = req.comentario;
+    res.status(200).json(comentario);
 }
 
 const crearComentario = async (req, res) => {
     try {
-
+        const { texto, fecha, esVisible } = req.body;
+        const comentario = await Comentario.create({
+            texto,
+            fecha,
+            esVisible
+        });
+        res.status(201).json(comentario);
     } catch (error) {
         res.status(500).json({
-            error: error.message,
+            error: "Error al crear comentario",
         })
     }
 }
 
 const actualizarComentario = async (req, res) => {
     try {
-
+        const { id } = req.params;
+        const { texto, fecha, esVisible } = req.body;
+        const comentario = req.comentario;
+        await comentario.update({
+            texto,
+            fecha,
+            esVisible
+        });
+        res.status(200).json(comentario);
     } catch (error) {
         res.status(500).json({
-            error: error.message,
+            error: "Error al actualizar el comentario",
         })
     }
 }
 
 const eliminarComentario = async (req, res) => {
     try {
-
+        const { id } = req.params;
+        const comentario = req.comentario;
+        await comentario.destroy();
+        res.status(200).json({
+            message: "Comentario eliminado correctamente",
+        });
     } catch (error) {
         res.status(500).json({
-            error: error.message,
+            error: "Error al eliminar el comentario",
         })
     }
 }
 
 const cambiarVisibilidad = async (req, res) => {
     try {
+        const { id } = req.params;
+        const comentario = req.comentario;
 
+        await comentario.update({
+            esVisible: false
+        });
+        res.status(200).json({
+            message: "El comentario ya no es visible.",
+        })
     } catch (error) {
         res.status(500).json({
-            error: error.message,
+            error: "Error al cambiar la visibilidad del comentario.",
         })
     }
 }
