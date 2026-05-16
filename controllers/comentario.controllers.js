@@ -28,7 +28,9 @@ const obtenerComentario = async (req, res) => {
     try {
 
     } catch (error) {
-
+        res.status(500).json({
+            error: error.message,
+        })
     }
 }
 
@@ -36,7 +38,9 @@ const crearComentario = async (req, res) => {
     try {
 
     } catch (error) {
-
+        res.status(500).json({
+            error: error.message,
+        })
     }
 }
 
@@ -44,7 +48,9 @@ const actualizarComentario = async (req, res) => {
     try {
 
     } catch (error) {
-
+        res.status(500).json({
+            error: error.message,
+        })
     }
 }
 
@@ -52,7 +58,9 @@ const eliminarComentario = async (req, res) => {
     try {
 
     } catch (error) {
-
+        res.status(500).json({
+            error: error.message,
+        })
     }
 }
 
@@ -60,7 +68,9 @@ const cambiarVisibilidad = async (req, res) => {
     try {
 
     } catch (error) {
-
+        res.status(500).json({
+            error: error.message,
+        })
     }
 }
 
