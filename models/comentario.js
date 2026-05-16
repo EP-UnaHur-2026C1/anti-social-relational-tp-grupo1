@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Comentario.init({
     texto: DataTypes.STRING,
-    fecha: DataTypes.TEXT,
+    fecha: DataTypes.DATE,
     esVisible: DataTypes.BOOLEAN
   }, {
     sequelize,
