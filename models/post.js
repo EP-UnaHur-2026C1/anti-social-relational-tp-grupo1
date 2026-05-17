@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Post.hasMany(models.PostImagen, { 
-        foreignKey: 'postId',
+        foreignKey: 'idPost',
         as: 'imagenes' 
       });
     }
