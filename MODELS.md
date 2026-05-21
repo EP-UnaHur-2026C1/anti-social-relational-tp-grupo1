@@ -34,19 +34,17 @@ Representa una publicación en la red social.
 
 | Campo | Tipo | Descripción |
 |-------|------|-------------|
-| `id` | INTEGER | Clave primaria, autoincremental |
-| `titulo` | STRING | Título de la publicación |
-| `contenido` | STRING | Contenido/texto de la publicación |
-| `fecha` | TEXT | Fecha de creación (formato texto) |
+| `idPublicacion` | INTEGER | Clave primaria, autoincremental |
+| `fecha` | DATETIME | Fecha y hora de la publicación |
+| `texto` | TEXT | Contenido de la publicación |
 
 ### Ejemplo
 
 ```json
 {
-  "id": 1,
-  "titulo": "Mi primer post",
-  "contenido": "Hola mundo!",
-  "fecha": "2026-05-15"
+  "idPublicacion": 1,
+  "fecha": "2026-05-15 21:34:10",
+  "texto": "Hola mundo!"
 }
 ```
 
@@ -102,17 +100,15 @@ Representa una imagen asociada a un post.
 
 | Campo | Tipo | Descripción |
 |-------|------|-------------|
-| `id` | INTEGER | Clave primaria, autoincremental |
-| `nombre` | STRING | Nombre/descripción de la imagen |
-| `URL` | TEXT | URL de la imagen |
+| `idImagen` | INTEGER | Clave primaria, autoincremental |
+| `url` | STRING | URL de la imagen |
 
 ### Ejemplo
 
 ```json
 {
-  "id": 1,
-  "nombre": "Foto de perfil",
-  "URL": "https://ejemplo.com/imagen.jpg"
+  "idImagen": 1,
+  "url": "https://ejemplo.com/imagen.jpg"
 }
 ```
 

@@ -32,6 +32,18 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use(express.json());
 
+const usuarioRoutes = require("../routes/usuario.routes");
+const postRoutes = require("../routes/post.routes");
+const tagRoutes = require("../routes/tag.routes");
+const postImagenRoutes = require("../routes/postimagen.routes");
+const comentarioRoutes = require("../routes/comentario.routes");
+
+app.use("/usuarios", usuarioRoutes);
+app.use("/posts", postRoutes);
+app.use("/tags", tagRoutes);
+app.use("/postimagenes", postImagenRoutes);
+app.use("/comentarios", comentarioRoutes);
+
 app.listen(PORT, async () => {
   await db.sequelize.sync();
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
