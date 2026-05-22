@@ -59,10 +59,34 @@ const eliminarUsuario = async (req, res) => {
   }
 };
 
+const seguirUsuario = async (req, res) => {
+  try {
+    const usuario = req.usuario;
+    const { usuarioId } = req.body;
+    if (usuarioId === usuario.id) {
+      res.status(400).json({ message: "No podes seguirte a vos mismo" })
+    }
+    const usuarioASeguir = await Usuario.findByPk(usuarioId);
+    if (!usuarioASeguir) {
+      res.status(404).json({ message: "Error: El usuario a seguir no existe" })
+    }
+    await usuario.addSeguido(usuarioASeguir)
+    res.status(200).json({ message: "Usuario seguido correctamente" })
+  } catch (error) {
+    res
+      .status(500)
+      .json({
+        message: "Error al seguir usuario",
+        error: error.message
+      })
+  }
+}
+
 module.exports = {
   crearUsuario,
   obtenerTodosLosUsuarios,
   obtenerUsuarioPorId,
   actualizarUsuario,
   eliminarUsuario,
+  seguirUsuario
 };
