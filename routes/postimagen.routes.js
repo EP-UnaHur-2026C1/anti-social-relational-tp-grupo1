@@ -3,9 +3,8 @@ const router = express.Router();
 
 const {
   crearPostImagen,
-  obtenerPostImagens,
+  obtenerPostImagenes,
   obtenerPostImagen,
-  actualizarPostImagen,
   eliminarPostImagen,
 } = require("../controllers/postimagen.controllers");
 
@@ -15,14 +14,8 @@ const {
 } = require("../middlewares/validarDatosPostImagen");
 
 router.post("/", validarDatosPostImagen, crearPostImagen);
-router.get("/", obtenerPostImagens);
+router.get("/", obtenerPostImagenes);
 router.get("/:id", validarPostImagenId, obtenerPostImagen);
-router.put(
-  "/:id",
-  validarPostImagenId,
-  validarDatosPostImagen,
-  actualizarPostImagen,
-);
 router.delete("/:id", validarPostImagenId, eliminarPostImagen);
 
 module.exports = router;

@@ -1,20 +1,32 @@
-'use strict';
-/** @type {import('sequelize-cli').Migration} */
+"use strict";
+
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('PostImagenes', {
+    await queryInterface.createTable("PostImagenes", {
       idImagen: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       url: {
-        type: Sequelize.STRING
-      }
+        type: Sequelize.TEXT,
+        allowNull: false,
+      },
+      idPost: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "Posts",
+          key: "idPost",
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+      },
     });
   },
+
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('PostImagenes');
-  }
+    await queryInterface.dropTable("PostImagenes");
+  },
 };

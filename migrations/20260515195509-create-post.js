@@ -10,12 +10,22 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       fecha: {
-        type: Sequelize.DATETIME
+        type: Sequelize.DATE
       },
       texto: {
         allowNull: false,
         type: Sequelize.TEXT
-      }
+      },
+      idUsuario: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "Usuarios",
+          key: "id",
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+      },
     });
   },
   async down(queryInterface, Sequelize) {

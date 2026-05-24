@@ -5,38 +5,55 @@ module.exports = (sequelize, DataTypes) => {
   class Post extends Model {
     static associate(models) {
       Post.belongsTo(models.Usuario, {
-        foreignKey: "usuarioId",
+        foreignKey: "idUsuario",
         as: "usuario",
       });
 
       Post.hasMany(models.Comentario, {
-        foreignKey: "postId",
+        foreignKey: "idPost",
         as: "comentarios",
       });
 
-      Post.hasMany(models.PostImagen, { foreignKey: "postId", as: "imagenes" });
+      Post.hasMany(models.PostImagen, {
+        foreignKey: "idPost",
+        as: "imagenes",
+      });
 
       Post.belongsToMany(models.Tag, {
         through: "PostTags",
-        foreignKey: "postId",
+        foreignKey: "idPost",
+        otherKey: "idTag",
         as: "tags",
       });
     }
   }
+
   Post.init(
     {
-      titulo: DataTypes.STRING,
-      contenido: {
-        type: DataTypes.STRING,
+      idPost: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+      },
+      fecha: {
+        type: DataTypes.DATE,
+      },
+      texto: {
+        type: DataTypes.TEXT,
         allowNull: false,
       },
-      fecha: DataTypes.TEXT,
+      idUsuario: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
     },
     {
       sequelize,
       modelName: "Post",
-      tableName: "posts",
-    },
+      tableName: "Posts",
+      timestamps: false,
+    }
   );
+
   return Post;
 };

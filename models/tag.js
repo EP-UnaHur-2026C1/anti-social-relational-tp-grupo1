@@ -10,15 +10,28 @@ module.exports = (sequelize, DataTypes) => {
       })
     }
   }
-  Tag.init({
-    nombre: DataTypes.STRING,
-    allowNull: false,
-    unique: true
-  }, {
-    sequelize,
-    modelName: 'Tag',
-    tableName: 'tags',
-    timestamps: true
-  });
+  Tag.init(
+    {
+      id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+      },
+      nombre: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+      },
+      deletedAt: {
+        type: DataTypes.DATE,
+        allowNull: true,
+      },
+    },
+    {
+      sequelize,
+      modelName: "Tag",
+      tableName: "Tags",
+    }
+  );
   return Tag;
 };

@@ -25,7 +25,28 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
-      }
+      },
+      idPost: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "Posts",
+          key: "idPost",
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+      },
+
+      usuarioId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "Usuarios",
+          key: "id",
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+      },
     });
   },
   async down(queryInterface, Sequelize) {
