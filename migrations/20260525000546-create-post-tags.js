@@ -1,26 +1,24 @@
 'use strict';
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Posts', {
+    await queryInterface.createTable("PostTags", {
       idPost: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
-      },
-      fecha: {
-        type: Sequelize.DATE
-      },
-      texto: {
-        allowNull: false,
-        type: Sequelize.TEXT
-      },
-      idUsuario: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: "Usuarios",
+          model: "Posts",
+          key: "idPost",
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+      },
+      idTag: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "Tags",
           key: "id",
         },
         onUpdate: "CASCADE",
@@ -28,7 +26,8 @@ module.exports = {
       },
     });
   },
+
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Posts');
-  }
+    await queryInterface.dropTable("PostTags");
+  },
 };

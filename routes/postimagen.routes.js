@@ -5,39 +5,31 @@
  *     PostImagen:
  *       type: object
  *       required:
- *         - URL
- *         - postId
+ *         - url
+ *         - idPost
  *       properties:
- *         id:
+ *         idImagen:
  *           type: integer
  *           description: ID autogenerado de la imagen
- *         nombre:
- *           type: string
- *           maxLength: 100
- *           description: Nombre de la imagen (opcional)
- *         URL:
+ *         url:
  *           type: string
  *           format: uri
  *           description: URL de la imagen
- *         postId:
+ *         idPost:
  *           type: integer
  *           description: ID del post al que pertenece la imagen
  *
  *     PostImagenInput:
  *       type: object
  *       required:
- *         - URL
- *         - postId
+ *         - url
+ *         - idPost
  *       properties:
- *         nombre:
- *           type: string
- *           maxLength: 100
- *           description: Nombre de la imagen (opcional)
- *         URL:
+ *         url:
  *           type: string
  *           format: uri
  *           description: URL de la imagen
- *         postId:
+ *         idPost:
  *           type: integer
  *           description: ID del post asociado
  *
@@ -56,7 +48,7 @@ const {
   eliminarPostImagen,
 } = require("../controllers/postimagen.controllers");
 
-const validarPostImagenId = require("../middlewares/validarPostImagenId");
+const { validarPostImagenId } = require("../middlewares/validarPostImagenId");
 const {
   validarDatosPostImagen,
 } = require("../middlewares/validarDatosPostImagen");

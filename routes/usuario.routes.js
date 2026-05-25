@@ -283,6 +283,6 @@ router.delete("/:id", validarUsuarioExiste, eliminarUsuario);
  *       500:
  *         description: Error interno del servidor
  */
-router.post(":id/seguir", validarUsuarioExiste, validarSeguir, seguirUsuario)
+router.post("/:id/seguir", validarUsuarioExiste, validarSeguir, seguirUsuario)
 
 module.exports = router;

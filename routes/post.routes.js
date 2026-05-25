@@ -5,53 +5,50 @@
  *     Post:
  *       type: object
  *       required:
- *         - contenido
- *         - usuarioId
+ *         - texto
+ *         - idUsuario
  *       properties:
- *         id:
+ *         idPost:
  *           type: integer
  *           description: ID autogenerado del post
- *         titulo:
- *           type: string
- *           maxLength: 100
- *           description: Título del post (opcional)
- *         contenido:
+ *         texto:
  *           type: string
  *           description: Contenido o descripción del post
  *         fecha:
  *           type: string
+ *           format: date
  *           description: Fecha del post
- *         usuarioId:
+ *         idUsuario:
  *           type: integer
  *           description: ID del usuario que crea el post
- *         createdAt:
- *           type: string
- *           format: date-time
- *           description: Fecha de creación
- *         updatedAt:
- *           type: string
- *           format: date-time
- *           description: Fecha de última actualización
  *
  *     PostInput:
  *       type: object
  *       required:
- *         - contenido
- *         - usuarioId
+ *         - texto
+ *         - idUsuario
  *       properties:
- *         titulo:
- *           type: string
- *           maxLength: 100
- *           description: Título del post (opcional)
- *         contenido:
+ *         texto:
  *           type: string
  *           description: Contenido o descripción del post
  *         fecha:
  *           type: string
+ *           format: date
  *           description: Fecha del post
- *         usuarioId:
+ *         idUsuario:
  *           type: integer
  *           description: ID del usuario que crea el post
+ *         tags:
+ *           type: array
+ *           items:
+ *             type: integer
+ *           description: IDs de los tags asociados al post
+ *         imagenes:
+ *           type: array
+ *           items:
+ *             type: string
+ *             format: uri
+ *           description: URLs de las imágenes del post
  *
  * tags:
  *   name: Posts
@@ -69,7 +66,7 @@ const {
   eliminarPost,
 } = require("../controllers/post.controllers");
 
-const validarPostId = require("../middlewares/validarPostId");
+const { validarPostId } = require("../middlewares/validarPostId");
 const { validarDatosPost } = require("../middlewares/validarDatosPost");
 
 /**
@@ -90,7 +87,13 @@ const { validarDatosPost } = require("../middlewares/validarDatosPost");
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Post'
+ *               type: object
+ *               properties:
+ *                 mensaje:
+ *                   type: string
+ *                   example: Post creado correctamente
+ *                 post:
+ *                   $ref: '#/components/schemas/Post'
  *       400:
  *         description: Error de validación
  *       500:
@@ -101,7 +104,7 @@ const { validarDatosPost } = require("../middlewares/validarDatosPost");
  *     tags: [Posts]
  *     responses:
  *       200:
- *         description: Lista de todas las publicaciones
+ *         description: Lista de todas las publicaciones con usuario, imágenes y tags
  *         content:
  *           application/json:
  *             schema:
@@ -129,7 +132,7 @@ router.get("/", obtenerPosts);
  *         description: ID del post
  *     responses:
  *       200:
- *         description: Datos del post solicitado
+ *         description: Datos del post solicitado con usuario, imágenes y tags
  *         content:
  *           application/json:
  *             schema:
@@ -157,16 +160,24 @@ router.get("/", obtenerPosts);
  *               texto:
  *                 type: string
  *                 description: Nuevo texto del post
- *               fecha:
- *                 type: string
- *                 description: Nueva fecha del post
+ *               tags:
+ *                 type: array
+ *                 items:
+ *                   type: integer
+ *                 description: IDs de los tags a asignar al post
  *     responses:
  *       200:
  *         description: Post actualizado exitosamente
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Post'
+ *               type: object
+ *               properties:
+ *                 mensaje:
+ *                   type: string
+ *                   example: Post actualizado correctamente
+ *                 post:
+ *                   $ref: '#/components/schemas/Post'
  *       404:
  *         description: Post no encontrado
  *       500:
@@ -199,7 +210,7 @@ router.get("/", obtenerPosts);
  *         description: Error interno del servidor
  */
 router.get("/:id", validarPostId, obtenerPost);
-router.put("/:id", validarPostId, validarDatosPost, actualizarPost);
+router.put("/:id", validarPostId, actualizarPost);
 router.delete("/:id", validarPostId, eliminarPost);
 
 module.exports = router;

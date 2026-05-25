@@ -15,6 +15,11 @@
  *           minLength: 2
  *           maxLength: 50
  *           description: Nombre único del tag
+ *         deletedAt:
+ *           type: string
+ *           format: date-time
+ *           nullable: true
+ *           description: Fecha de eliminación suave
  *         createdAt:
  *           type: string
  *           format: date-time
@@ -109,11 +114,12 @@ router.get("/", obtenerTodosLosTags);
  *         description: ID del tag
  *     responses:
  *       200:
- *         description: Datos del tag solicitado
+ *         description: Nombre del tag solicitado
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Tag'
+ *               type: string
+ *               example: "programación"
  *       404:
  *         description: Tag no encontrado
  *

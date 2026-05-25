@@ -7,8 +7,8 @@
  *       required:
  *         - texto
  *         - fecha
- *         - postId
- *         - usuarioId
+ *         - idPost
+ *         - idUsuario
  *       properties:
  *         id:
  *           type: integer
@@ -26,28 +26,20 @@
  *           type: boolean
  *           default: true
  *           description: Indica si el comentario es visible
- *         postId:
+ *         idPost:
  *           type: integer
  *           description: ID del post al que pertenece el comentario
- *         usuarioId:
+ *         idUsuario:
  *           type: integer
  *           description: ID del usuario que creó el comentario
- *         createdAt:
- *           type: string
- *           format: date-time
- *           description: Fecha de creación
- *         updatedAt:
- *           type: string
- *           format: date-time
- *           description: Fecha de última actualización
  *
  *     ComentarioInput:
  *       type: object
  *       required:
  *         - texto
  *         - fecha
- *         - postId
- *         - usuarioId
+ *         - idPost
+ *         - idUsuario
  *       properties:
  *         texto:
  *           type: string
@@ -62,10 +54,10 @@
  *           type: boolean
  *           default: true
  *           description: Indica si el comentario es visible
- *         postId:
+ *         idPost:
  *           type: integer
  *           description: ID del post al que pertenece
- *         usuarioId:
+ *         idUsuario:
  *           type: integer
  *           description: ID del usuario que comenta
  *
@@ -75,7 +67,14 @@
  */
 
 const { Router } = require('express');
-const comentarioController = require('../controllers/comentario.controllers');
+const {
+  obtenerComentario,
+  obtenerComentarios,
+  crearComentario,
+  actualizarComentario,
+  cambiarVisibilidad,
+  eliminarComentario } = require('../controllers/comentario.controllers');
+
 const validarComentario = require("../middlewares/validarComentario");
 const validarAntiguedad = require("../middlewares/validarAntiguedad");
 const {
@@ -124,8 +123,12 @@ const router = Router();
  *       500:
  *         description: Error interno del servidor
  */
-router.get('/', comentarioController.obtenerComentarios);
-router.post('/', validarComentario, comentarioController.crearComentario);
+router.get('/', obtenerComentarios);
+router.get('/:id', validarComentarioIdConPostYUsuario, obtenerComentario);
+router.post('/', validarComentario, crearComentario);
+router.put('/:id', validarComentario, validarComentarioId, actualizarComentario);
+router.patch('/:id/visibilidad', validarComentarioId, validarAntiguedad, cambiarVisibilidad);
+router.delete('/:id', validarComentarioId, eliminarComentario);
 
 /**
  * @swagger
@@ -219,9 +222,6 @@ router.post('/', validarComentario, comentarioController.crearComentario);
  *       500:
  *         description: Error interno del servidor
  */
-router.get('/:id', validarComentarioIdConPostYUsuario, comentarioController.obtenerComentario);
-router.put('/:id', validarComentario, validarComentarioId, comentarioController.actualizarComentario);
-router.delete('/:id', validarComentarioId, comentarioController.eliminarComentario);
 
 /**
  * @swagger
@@ -255,6 +255,5 @@ router.delete('/:id', validarComentarioId, comentarioController.eliminarComentar
  *       500:
  *         description: Error interno del servidor
  */
-router.patch('/:id/visibilidad', validarComentarioId, validarAntiguedad, comentarioController.cambiarVisibilidad);
 
 module.exports = router;

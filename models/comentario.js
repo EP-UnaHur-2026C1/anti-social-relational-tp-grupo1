@@ -11,11 +11,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Comentario.belongsTo(models.Post, {
-        foreignKey: "postId",
+        foreignKey: "idPost",
         as: "post",
       });
       Comentario.belongsTo(models.Usuario, {
-        foreignKey: "usuarioId",
+        foreignKey: "id",
         as: "usuario"
       })
     }
@@ -23,7 +23,16 @@ module.exports = (sequelize, DataTypes) => {
   Comentario.init({
     texto: DataTypes.STRING,
     fecha: DataTypes.DATE,
-    esVisible: DataTypes.BOOLEAN
+    esVisible: DataTypes.BOOLEAN,
+    idUsuario: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+
+    idPost: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
   }, {
     sequelize,
     modelName: 'Comentario',
