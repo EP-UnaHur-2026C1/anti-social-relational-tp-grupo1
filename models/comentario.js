@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
         as: "post",
       });
       Comentario.belongsTo(models.Usuario, {
-        foreignKey: "idUsuario",
+        foreignKey: "id",
         as: "usuario"
       })
     }
@@ -23,7 +23,16 @@ module.exports = (sequelize, DataTypes) => {
   Comentario.init({
     texto: DataTypes.STRING,
     fecha: DataTypes.DATE,
-    esVisible: DataTypes.BOOLEAN
+    esVisible: DataTypes.BOOLEAN,
+    idUsuario: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+
+    idPost: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
   }, {
     sequelize,
     modelName: 'Comentario',
