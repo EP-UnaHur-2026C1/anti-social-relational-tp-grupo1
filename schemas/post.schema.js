@@ -5,6 +5,12 @@ const postSchema = Joi.object({
     "string.empty": "La descripción del post no puede estar vacía",
     "any.required": "La descripción del post es obligatoria",
   }),
+  tags: Joi.array()
+    .items(Joi.number().integer().messages({
+      "string.empty": "Los tags no pueden estar vacíos",
+    }))
+    .optional(),
+
   fecha: Joi.string().optional(),
   idUsuario: Joi.number().integer().required().messages({
     "any.required":
