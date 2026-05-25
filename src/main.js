@@ -24,11 +24,26 @@ const swaggerOptions = {
       },
     ],
   },
-  apis: ["./src/**/*.js"],
+  apis: ["./routes/**/*.js"],
 };
 
 const swaggerSpec = swaggerJsdoc(swaggerOptions);
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+// Servir el spec como JSON
+app.get("/api-docs/swagger.json", (req, res) => {
+  res.json(swaggerSpec);
+});
+
+// Swagger UI que carga el spec desde el JSON endpoint
+app.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(null, {
+    swaggerOptions: {
+      url: "/api-docs/swagger.json",
+    },
+  })
+);
 
 app.use(express.json());
 
