@@ -1,5 +1,12 @@
 const { Router } = require('express');
-const comentarioController = require('../controllers/comentario.controllers');
+const {
+  obtenerComentario,
+  obtenerComentarios,
+  crearComentario,
+  actualizarComentario,
+  cambiarVisibilidad,
+  eliminarComentario } = require('../controllers/comentario.controllers');
+
 const validarComentario = require("../middlewares/validarComentario");
 const validarAntiguedad = require("../middlewares/validarAntiguedad");
 const {
@@ -10,11 +17,11 @@ const {
 
 const router = Router();
 
-router.get('/', comentarioController.obtenerComentarios);
-router.get('/:id', validarComentarioIdConPostYUsuario, comentarioController.obtenerComentario); 
-router.post('/', validarComentario, comentarioController.crearComentario); 
-router.put('/:id', validarComentario, validarComentarioId, comentarioController.actualizarComentario); 
-router.patch('/:id/visibilidad', validarComentarioId, validarAntiguedad, comentarioController.cambiarVisibilidad);
-router.delete('/:id', validarComentarioId, comentarioController.eliminarComentario); 
+router.get('/', obtenerComentarios);
+router.get('/:id', validarComentarioIdConPostYUsuario, obtenerComentario);
+router.post('/', validarComentario, crearComentario);
+router.put('/:id', validarComentario, validarComentarioId, actualizarComentario);
+router.patch('/:id/visibilidad', validarComentarioId, validarAntiguedad, cambiarVisibilidad);
+router.delete('/:id', validarComentarioId, eliminarComentario);
 
 module.exports = router;
