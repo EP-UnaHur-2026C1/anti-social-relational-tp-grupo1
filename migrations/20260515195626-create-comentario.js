@@ -37,7 +37,7 @@ module.exports = {
         onDelete: "CASCADE",
       },
 
-      usuarioId: {
+      idUsuario: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
