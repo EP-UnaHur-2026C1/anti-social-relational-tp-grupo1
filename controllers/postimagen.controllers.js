@@ -1,4 +1,4 @@
-const { PostImagen } = require("../models")
+const { PostImagen, Post } = require("../models")
 
 const obtenerPostImagenes = async (req, res) => {
   try {
@@ -7,7 +7,7 @@ const obtenerPostImagenes = async (req, res) => {
         {
           model: Post,
           as: "post",
-          attributes: ["id", "titulo", "contenido"],
+          attributes: [],
         },
       ],
     });
@@ -19,7 +19,7 @@ const obtenerPostImagenes = async (req, res) => {
 };
 
 const obtenerPostImagen = async (req, res) => {
-    res.status(200).json(req.PostImagen)
+    res.status(200).json(req.postimagen)
 }
 
 const crearPostImagen = async (req, res) => { 
@@ -39,7 +39,7 @@ const crearPostImagen = async (req, res) => {
 
 const eliminarPostImagen = async (req, res) => {
     try {
-        const imagen = req.PostImagen
+        const imagen = req.postimagen
         await imagen.destroy()
         res.status(200).json({ message: "Imagen eliminada" })
     } catch (error) {

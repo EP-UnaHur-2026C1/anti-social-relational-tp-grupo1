@@ -31,18 +31,17 @@ const obtenerComentario = async (req, res) => {
 
 const crearComentario = async (req, res) => {
     try {
-        const { texto, fecha, esVisible, postId, usuarioId } = req.body;
+        const { texto, idPost, idUsuario } = req.body;
         const comentario = await Comentario.create({
             texto,
-            fecha,
-            esVisible,
-            postId,
-            usuarioId
+            esVisible: true,
+            idPost,
+            idUsuario
         });
         res.status(201).json(comentario);
     } catch (error) {
         res.status(500).json({
-            error: "Error al crear comentario",
+            error: error.message,
         });
     }
 }
