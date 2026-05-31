@@ -7,12 +7,12 @@ const obtenerComentarios = async (req, res) => {
             include: [{
                 model: Usuario,
                 as: 'usuario',
-                attributes: ["nombre"]
+                attributes: ["nickName"]
             },
             {
                 model: Post,
                 as: 'post',
-                attributes: ["titulo", "contenido", "fecha"]
+                attributes: ["idPost", "texto"]
             }
             ]
         })

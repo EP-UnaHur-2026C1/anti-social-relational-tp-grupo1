@@ -4,22 +4,32 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class PostImagen extends Model {
     static associate(models) {
-      PostImagen.belongsTo(models.Post, { foreignKey: "postId", as: "post" });
+      PostImagen.belongsTo(models.Post, { foreignKey: "idPost", as: "post" });
     }
   }
   PostImagen.init(
     {
-      nombre: DataTypes.STRING,
-      URL: {
+      idImagen: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+      },
+      url: {
         type: DataTypes.TEXT,
+        allowNull: false,
+      },
+      idPost: {
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
     },
     {
       sequelize,
       modelName: "PostImagen",
-      tableName: "post_imagens",
-    },
+      tableName: "PostImagenes",
+      timestamps: false,
+    }
   );
+
   return PostImagen;
 };

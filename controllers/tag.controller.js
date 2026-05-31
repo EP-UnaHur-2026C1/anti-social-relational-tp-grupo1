@@ -24,14 +24,16 @@ const obtenerTodosLosTags = async (req, res) => {
 };
 
 const obtenerTagPorId = async (req, res) => {
-  const tag = req.tag;
-  res.status(200).json(tag);
+  const { id } = req.params;
+  const tag = await Tag.findByPk(id);
+  res.status(200).json(tag.nombre);
 };
 
 const actualizarTag = async (req, res) => {
   try {
+    const { id } = req.params;
     const { nombre } = req.body;
-    const tag = req.tag;
+    const tag = await Tag.findByPk(id);
     await tag.update({ nombre: nombre || tag.nombre });
     res.status(200).json({ mensaje: "Tag actualizado con éxito", tag });
   } catch (error) {
@@ -43,7 +45,8 @@ const actualizarTag = async (req, res) => {
 
 const eliminarTag = async (req, res) => {
   try {
-    const tag = req.tag;
+    const { id } = req.params;
+    const tag = await Tag.findByPk(id);
     await tag.destroy();
     res.status(200).json({ mensaje: "Tag eliminado correctamente" });
   } catch (error) {
