@@ -1,4 +1,4 @@
-const { Post, PostImagen, Usuario, Tag } = require("../models")
+const { Post, PostImagen, Usuario, Tag, Comentario } = require("../models")
 
 const obtenerPosts = async (req, res) => {
   try {
@@ -7,6 +7,7 @@ const obtenerPosts = async (req, res) => {
         { model: Usuario, as: "usuario" },
         { model: PostImagen, as: "imagenes"},
         { model: Tag, as: "tags", attributes: ["id", "nombre"], through: { attributes: [], } },
+        { model: Comentario, as: "comentarios" },
       ],
     });
 
@@ -24,6 +25,7 @@ const obtenerPost = async (req, res) => {
         { model: Usuario, as: "usuario" },
         { model: PostImagen, as: "imagenes"},
         { model: Tag, as: "tags", attributes: ["id", "nombre"], through: { attributes: [], } },
+        { model: Comentario, as: "comentarios" },
       ],
     });
     res.status(200).json(post);

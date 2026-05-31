@@ -12,12 +12,11 @@ const comentarioSchema = Joi.object({
             "string.max": "El texto debe tener máximo 500 caractéres",
             "any.required": "El texto es obligatorio"
         }),
-    fecha: Joi.date().iso().required(),
     esVisible: Joi.boolean().default(true),
-    postId: Joi.number().integer().required().messages({
+    idPost: Joi.number().integer().required().messages({
         "any.required": "El ID del post es obligatorio"
     }),
-    usuarioId: Joi.number().integer().required().messages({
+    idUsuario: Joi.number().integer().required().messages({
         "any.required": "El ID del usuario es obligatorio"
     })
 })

@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -7,6 +7,7 @@ module.exports = {
       idPost: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        primaryKey: true,
         references: {
           model: "Posts",
           key: "idPost",
@@ -14,15 +15,27 @@ module.exports = {
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
       },
+
       idTag: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        primaryKey: true,
         references: {
           model: "Tags",
           key: "id",
         },
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
+      },
+
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
+
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
       },
     });
   },
