@@ -125,6 +125,7 @@ Este archivo (`models/index.js`) configura las asociaciones entre los modelos me
 - **Post** tiene muchos **Tag** (relación muchos a muchos)
 - **Post** tiene muchos **PostImagen**
 - **Usuario** tiene muchos **Comentario**
+- **Usuario** tiene muchos **Usuario**
 
 ---
 
