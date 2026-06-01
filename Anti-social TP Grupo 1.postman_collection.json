@@ -67,7 +67,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "",
+              "raw": "{\r\n  \"nickName\": \"UsuarioPrueba2\",\r\n  \"email\": \"prueba2@unahur.edu.ar\",\r\n  \"password\": \"Password123!\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -95,7 +95,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "",
+              "raw": "{\r\n  \"nickName\": \"usuario_test\",\r\n  \"email\": \"test@unahur.edu.ar\",\r\n  \"password\": \"Password123\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -142,6 +142,15 @@
           "request": {
             "method": "POST",
             "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"usuarioId\": 2\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
               "raw": "http://localhost:3000/usuarios/1/seguir",
               "protocol": "http",
@@ -207,6 +216,15 @@
           "request": {
             "method": "POST",
             "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"texto\": \"Este es el texto del post de prueba para verificar la API.\",\r\n  \"idUsuario\": 1,\r\n  \"fecha\": \"2026-05-31\",\r\n  \"imagenes\": [\r\n    \"https://ejemplo.com/foto.jpg\"\r\n  ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
               "raw": "http://localhost:3000/posts",
               "protocol": "http",
@@ -226,6 +244,15 @@
           "request": {
             "method": "PUT",
             "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"texto\": \"Este es el texto del post de prueba para verificar la API, actualizado.\",\r\n  \"idUsuario\": 1,\r\n  \"fecha\": \"2026-05-31\",\r\n  \"imagenes\": [\r\n    \"https://ejemplo.com/foto.jpg\"\r\n  ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
               "raw": "http://localhost:3000/posts/1",
               "protocol": "http",
@@ -310,6 +337,15 @@
           "request": {
             "method": "POST",
             "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"texto\": \"Este es un comentario de prueba válido.\",\r\n  \"esVisible\": true,\r\n  \"idPost\": 1,\r\n  \"idUsuario\": 2\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
               "raw": "http://localhost:3000/comentarios",
               "protocol": "http",
@@ -329,6 +365,15 @@
           "request": {
             "method": "PUT",
             "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"texto\": \"Comentario actualizado\",\r\n  \"esVisible\": true,\r\n  \"idPost\": 1,\r\n  \"idUsuario\": 2\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
               "raw": "http://localhost:3000/comentarios/1",
               "protocol": "http",
@@ -433,6 +478,15 @@
           "request": {
             "method": "POST",
             "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nombre\": \"tecnologia\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
               "raw": "http://localhost:3000/tags",
               "protocol": "http",
@@ -452,8 +506,17 @@
           "request": {
             "method": "PUT",
             "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nombre\": \"electronica\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
-              "raw": "http://localhost:3000/tags/2",
+              "raw": "http://localhost:3000/tags/1",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -461,7 +524,7 @@
               "port": "3000",
               "path": [
                 "tags",
-                "2"
+                "1"
               ]
             }
           },
@@ -536,6 +599,15 @@
           "request": {
             "method": "POST",
             "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"url\": \"https://ejemplo.com/imagenes/foto1.jpg\",\r\n  \"idPost\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
               "raw": "http://localhost:3000/postimagenes",
               "protocol": "http",
