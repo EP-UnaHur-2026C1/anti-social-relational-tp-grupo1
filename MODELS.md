@@ -51,7 +51,7 @@ Representa una publicación en la red social.
 {
   "idPublicacion": 1,
   "fecha": "2026-05-15",
-  "texto": "Hola mundo!"
+  "texto": "Hola mundo!",
   "idUsuario": 1
 }
 ```
@@ -135,7 +135,7 @@ Representa una imagen asociada a un post.
 ```json
 {
   "idImagen": 1,
-  "url": "https://ejemplo.com/imagen.jpg"
+  "url": "https://ejemplo.com/imagen.jpg",
   "idPost": 1
 }
 ```
