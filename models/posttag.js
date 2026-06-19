@@ -1,18 +1,15 @@
 const mongoose = require("mongoose");
 
-const comentarioSchema = new mongoose.Schema(
+const postTagSchema = new mongoose.Schema(
   {
-    texto: { type: String, required: true },
-    fecha: { type: Date, default: Date.now },
-    esVisible: { type: Boolean, default: true },
-    usuario: {
-      type: mongoose.Types.ObjectId,
-      ref: "Usuario",
-      required: true,
-    },
     post: {
       type: mongoose.Types.ObjectId,
       ref: "Post",
+      required: true,
+    },
+    tag: {
+      type: mongoose.Types.ObjectId,
+      ref: "Tag",
       required: true,
     },
   },
@@ -29,4 +26,6 @@ const comentarioSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("Comentario", comentarioSchema);
+postTagSchema.index({ post: 1, tag: 1 }, { unique: true });
+
+module.exports = mongoose.model("PostTag", postTagSchema);

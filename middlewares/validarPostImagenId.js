@@ -3,7 +3,7 @@ const { PostImagen } = require("../models")
 const validarPostImagenId = async (req, res, next) => {
     try {
         const { id } = req.params
-        const imagen = await PostImagen.findByPk(id)
+        const imagen = await PostImagen.findById(id)
         if (!imagen) {
             return res.status(404).json({ error: "Imagen no encontrada" })
         }

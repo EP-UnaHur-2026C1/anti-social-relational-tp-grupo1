@@ -1,22 +1,12 @@
-const { Comentario, Post, Usuario } = require('../models')
+const { Comentario } = require('../models')
 
 const validarComentarioIdConPostYUsuario = async (req, res, next) => {
     try {
         const { id } = req.params
-        const comentario = await Comentario.findByPk(id, {
-            attributes: ["texto", "fecha", "esVisible"],
-            include: [{
-                model: Post,
-                as: "post",
-                attributes: ["titulo", 'contenido', "fecha"]
-            },
-            {
-                model: Usuario,
-                as: "usuario",
-                attributes: ['nombre']
-            }
-            ]
-        })
+        const comentario = await Comentario.findById(id)
+            .select("texto fecha esVisible")
+            .populate("post", "texto fecha")
+            .populate("usuario", "nickName")
         if (!comentario) {
             return res.status(404).json({ message: 'Comentario no encontrado' });
         }
@@ -32,7 +22,7 @@ const validarComentarioIdConPostYUsuario = async (req, res, next) => {
 const validarComentarioId = async (req, res, next) => {
     try {
         const { id } = req.params
-        const comentario = await Comentario.findByPk(id)
+        const comentario = await Comentario.findById(id)
         if (!comentario) {
             return res.status(404).json({ message: 'Comentario no encontrado' });
         }

@@ -1,24 +1,31 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class UsuarioAUsuario extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
+const mongoose = require("mongoose");
+
+const usuarioAUsuarioSchema = new mongoose.Schema(
+  {
+    seguidor: {
+      type: mongoose.Types.ObjectId,
+      ref: "Usuario",
+      required: true,
+    },
+    seguido: {
+      type: mongoose.Types.ObjectId,
+      ref: "Usuario",
+      required: true,
+    },
+  },
+  { timestamps: true,
+    toJSON: {
+        transform: (doc, ret) => {
+            ret.id = ret._id.toString();
+            delete ret._id;
+            delete ret._v;
+            delete ret.__v;
+            return ret
+        }
     }
   }
-  UsuarioAUsuario.init({
-    seguidorId: DataTypes.INTEGER,
-    seguidoId: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'UsuarioAUsuario',
-  });
-  return UsuarioAUsuario;
-};
+);
+
+usuarioAUsuarioSchema.index({ seguidor: 1, seguido: 1 }, { unique: true });
+
+module.exports = mongoose.model("UsuarioAUsuario", usuarioAUsuarioSchema);

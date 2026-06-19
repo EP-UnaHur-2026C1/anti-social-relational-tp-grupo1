@@ -6,7 +6,7 @@ const postImagenSchema = Joi.object({
     "string.empty": "La URL de la imagen no puede estar vacía",
     "any.required": "La URL de la imagen es obligatoria",
   }),
-  idPost: Joi.number().integer().required().messages({
+  post: Joi.string().required().messages({
     "any.required": "El ID del post asociado es obligatorio",
   }),
 });

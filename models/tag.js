@@ -1,38 +1,28 @@
-'use strict';
-const { Model } = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class Tag extends Model {
-    static associate(models) {
-      Tag.belongsToMany(models.Post, {
-        through: "PostTags",
-        foreignKey: "idTag",
-        otherKey: "idPost",
-        as: "posts",
-      });
+const mongoose = require("mongoose");
+
+const tagSchema = new mongoose.Schema(
+  {
+    nombre: { type: String, required: true, unique: true },
+    deletedAt: { type: Date, default: null },
+  },
+  { timestamps: true,
+    toJSON: {
+        transform: (doc, ret) => {
+            ret.id = ret._id.toString();
+            delete ret._id;
+            delete ret._v;
+            delete ret.__v;
+            return ret
+        }
     }
   }
-  Tag.init(
-    {
-      id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
-      },
-      nombre: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-      },
-      deletedAt: {
-        type: DataTypes.DATE,
-        allowNull: true,
-      },
-    },
-    {
-      sequelize,
-      modelName: "Tag",
-      tableName: "Tags",
-    }
-  );
-  return Tag;
-};
+);
+
+tagSchema.pre("find", function () {
+  this.where({ deletedAt: null });
+});
+tagSchema.pre("findOne", function () {
+  this.where({ deletedAt: null });
+});
+
+module.exports = mongoose.model("Tag", tagSchema);

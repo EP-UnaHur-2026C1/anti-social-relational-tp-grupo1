@@ -3,7 +3,7 @@ const { Tag } = require('../models');
 const validarTagExiste = async (req, res, next) => {
     try {
         const { id } = req.params;
-        const tag = await Tag.findByPk(id);
+        const tag = await Tag.findById(id);
 
         if (!tag) {
             return res.status(404).json({ mensaje: 'Tag no encontrado' });

@@ -14,7 +14,7 @@ const crearTag = async (req, res) => {
 
 const obtenerTodosLosTags = async (req, res) => {
   try {
-    const tags = await Tag.findAll();
+    const tags = await Tag.find();
     res.status(200).json(tags);
   } catch (error) {
     res
@@ -25,7 +25,10 @@ const obtenerTodosLosTags = async (req, res) => {
 
 const obtenerTagPorId = async (req, res) => {
   const { id } = req.params;
-  const tag = await Tag.findByPk(id);
+  const tag = await Tag.findById(id);
+  if (!tag) {
+    return res.status(404).json({ mensaje: "Tag no encontrado" });
+  }
   res.status(200).json(tag.nombre);
 };
 
@@ -33,8 +36,12 @@ const actualizarTag = async (req, res) => {
   try {
     const { id } = req.params;
     const { nombre } = req.body;
-    const tag = await Tag.findByPk(id);
-    await tag.update({ nombre: nombre || tag.nombre });
+    const tag = await Tag.findById(id);
+    if (!tag) {
+      return res.status(404).json({ mensaje: "Tag no encontrado" });
+    }
+    if (nombre !== undefined) tag.nombre = nombre;
+    await tag.save();
     res.status(200).json({ mensaje: "Tag actualizado con éxito", tag });
   } catch (error) {
     res
@@ -46,8 +53,12 @@ const actualizarTag = async (req, res) => {
 const eliminarTag = async (req, res) => {
   try {
     const { id } = req.params;
-    const tag = await Tag.findByPk(id);
-    await tag.destroy();
+    const tag = await Tag.findById(id);
+    if (!tag) {
+      return res.status(404).json({ mensaje: "Tag no encontrado" });
+    }
+    tag.deletedAt = new Date();
+    await tag.save();
     res.status(200).json({ mensaje: "Tag eliminado correctamente" });
   } catch (error) {
     res

@@ -1,10 +1,12 @@
-require("dotenv").config();
+const dotenv = require("dotenv");
+
+dotenv.config();
 
 const express = require("express");
 const app = express();
 const db = require("../models");
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
 // Swagger
 const swaggerJsdoc = require("swagger-jsdoc");
@@ -30,6 +32,8 @@ const swaggerOptions = {
 const swaggerSpec = swaggerJsdoc(swaggerOptions);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
+const { connectToDatabase } = require("./db");
+
 app.use(express.json());
 
 const usuarioRoutes = require("../routes/usuario.routes");
@@ -44,8 +48,13 @@ app.use("/tags", tagRoutes);
 app.use("/postimagenes", postImagenRoutes);
 app.use("/comentarios", comentarioRoutes);
 
-app.listen(PORT, async () => {
-  await db.sequelize.sync();
-  console.log(`Servidor corriendo en http://localhost:${PORT}`);
-  console.log(`Swagger disponible en http://localhost:${PORT}/api-docs`);
-});
+async function startServer() {
+  await connectToDatabase();
+  app.listen(PORT, () => {
+    console.log(`Servidor disponible en http://localhost:${PORT}`);
+    console.log(`Swagger disponible en http://localhost:${PORT}/api-docs`);
+  });
+}
+
+startServer();
+  

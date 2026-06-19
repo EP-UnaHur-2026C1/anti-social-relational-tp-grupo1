@@ -1,35 +1,25 @@
-"use strict";
-const { Model } = require("sequelize");
+const mongoose = require("mongoose");
 
-module.exports = (sequelize, DataTypes) => {
-  class PostImagen extends Model {
-    static associate(models) {
-      PostImagen.belongsTo(models.Post, { foreignKey: "idPost", as: "post" });
+const postImagenSchema = new mongoose.Schema(
+  {
+    url: { type: String, required: true },
+    post: {
+      type: mongoose.Types.ObjectId,
+      ref: "Post",
+      required: true,
+    },
+  },
+  { timestamps: true,
+    toJSON: {
+        transform: (doc, ret) => {
+            ret.id = ret._id.toString();
+            delete ret._id;
+            delete ret._v;
+            delete ret.__v;
+            return ret
+        }
     }
   }
-  PostImagen.init(
-    {
-      idImagen: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
-      },
-      url: {
-        type: DataTypes.TEXT,
-        allowNull: false,
-      },
-      idPost: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-    },
-    {
-      sequelize,
-      modelName: "PostImagen",
-      tableName: "PostImagenes",
-      timestamps: false,
-    }
-  );
+);
 
-  return PostImagen;
-};
+module.exports = mongoose.model("PostImagen", postImagenSchema);

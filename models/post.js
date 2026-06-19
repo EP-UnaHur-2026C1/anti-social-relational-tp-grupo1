@@ -1,59 +1,26 @@
-"use strict";
-const { Model } = require("sequelize");
+const mongoose = require("mongoose");
 
-module.exports = (sequelize, DataTypes) => {
-  class Post extends Model {
-    static associate(models) {
-      Post.belongsTo(models.Usuario, {
-        foreignKey: "idUsuario",
-        as: "usuario",
-      });
-
-      Post.hasMany(models.Comentario, {
-        foreignKey: "idPost",
-        as: "comentarios",
-      });
-
-      Post.hasMany(models.PostImagen, {
-        foreignKey: "idPost",
-        as: "imagenes",
-      });
-
-      Post.belongsToMany(models.Tag, {
-        through: "PostTags",
-        foreignKey: "idPost",
-        otherKey: "idTag",
-        as: "tags",
-      });
+const postSchema = new mongoose.Schema(
+  {
+    fecha: { type: Date, default: Date.now },
+    texto: { type: String, required: true },
+    usuario: {
+      type: mongoose.Types.ObjectId,
+      ref: "Usuario",
+      required: true,
+    },
+  },
+  { timestamps: true,
+    toJSON: {
+        transform: (doc, ret) => {
+            ret.id = ret._id.toString();
+            delete ret._id;
+            delete ret._v;
+            delete ret.__v;
+            return ret
+        }
     }
   }
+);
 
-  Post.init(
-    {
-      idPost: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
-      },
-      fecha: {
-        type: DataTypes.DATE,
-      },
-      texto: {
-        type: DataTypes.TEXT,
-        allowNull: false,
-      },
-      idUsuario: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-    },
-    {
-      sequelize,
-      modelName: "Post",
-      tableName: "Posts",
-      timestamps: false,
-    }
-  );
-
-  return Post;
-};
+module.exports = mongoose.model("Post", postSchema);

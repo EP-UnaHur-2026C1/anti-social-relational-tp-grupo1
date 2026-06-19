@@ -1,48 +1,33 @@
-'use strict';
-const {Model} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class Usuario extends Model {
-    static associate(models) {
-      Usuario.hasMany(models.Post, {foreignKey: 'idUsuario', as: 'posts'});
+const mongoose = require("mongoose");
 
-      Usuario.hasMany(models.Comentario, {foreignKey: 'idUsuario', as: 'comentarios'});
-
-      Usuario.belongsToMany(models.Usuario, {
-        through: "UsuarioAUsuario",
-        foreignKey: "seguidoId",
-        otherKey: "seguidorId",
-        as: "seguidores"
-      });
-
-      Usuario.belongsToMany(models.Usuario, {
-        through: "UsuarioAUsuario",
-        foreignKey: "seguidorId",
-        otherKey: "seguidoId",
-        as: "seguidos"
-      })
+const usuarioSchema = new mongoose.Schema(
+  {
+    nickName: { type: String, required: true, unique: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    deletedAt: { type: Date, default: null },
+  },
+  { timestamps: true,
+    toJSON: {
+        transform: (doc, ret) => {
+            ret.id = ret._id.toString();
+            delete ret._id;
+            delete ret._v;
+            delete ret.__v;
+            return ret
+        }
     }
   }
-  Usuario.init({
-    nickName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true
-    },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false
-    }
-  }, {
-    sequelize,
-    modelName: 'Usuario',
-    tableName: 'usuarios',
-    timestamps: true,
-    paranoid: true
-  });
-  return Usuario;
-};
+);
+
+usuarioSchema.pre("find", function () {
+  this.where({ deletedAt: null });
+});
+usuarioSchema.pre("findOne", function () {
+  this.where({ deletedAt: null });
+});
+usuarioSchema.pre("countDocuments", function () {
+  this.where({ deletedAt: null });
+});
+
+module.exports = mongoose.model("Usuario", usuarioSchema);

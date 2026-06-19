@@ -6,13 +6,13 @@ const postSchema = Joi.object({
     "any.required": "La descripción del post es obligatoria",
   }),
   tags: Joi.array()
-    .items(Joi.number().integer().messages({
+    .items(Joi.string().messages({
       "string.empty": "Los tags no pueden estar vacíos",
     }))
     .optional(),
 
   fecha: Joi.string().optional(),
-  idUsuario: Joi.number().integer().required().messages({
+  usuario: Joi.string().required().messages({
     "any.required":
       "El ID del usuario es obligatorio para crear una publicación",
   }),

@@ -13,10 +13,10 @@ const comentarioSchema = Joi.object({
             "any.required": "El texto es obligatorio"
         }),
     esVisible: Joi.boolean().default(true),
-    idPost: Joi.number().integer().required().messages({
+    post: Joi.string().required().messages({
         "any.required": "El ID del post es obligatorio"
     }),
-    idUsuario: Joi.number().integer().required().messages({
+    usuario: Joi.string().required().messages({
         "any.required": "El ID del usuario es obligatorio"
     })
 })
