@@ -37,16 +37,16 @@ const { connectToDatabase } = require("./db");
 app.use(express.json());
 
 const usuarioRoutes = require("../routes/usuario.routes");
-const postRoutes = require("../routes/post.routes");
-const tagRoutes = require("../routes/tag.routes");
-const postImagenRoutes = require("../routes/postimagen.routes");
-const comentarioRoutes = require("../routes/comentario.routes");
+// const postRoutes = require("../routes/post.routes");
+// const tagRoutes = require("../routes/tag.routes");
+// const postImagenRoutes = require("../routes/postimagen.routes");
+// const comentarioRoutes = require("../routes/comentario.routes");
 
 app.use("/usuarios", usuarioRoutes);
-app.use("/posts", postRoutes);
-app.use("/tags", tagRoutes);
-app.use("/postimagenes", postImagenRoutes);
-app.use("/comentarios", comentarioRoutes);
+// app.use("/posts", postRoutes);
+//app.use("/tags", tagRoutes);
+// app.use("/postimagenes", postImagenRoutes);
+// app.use("/comentarios", comentarioRoutes);
 
 async function startServer() {
   await connectToDatabase();

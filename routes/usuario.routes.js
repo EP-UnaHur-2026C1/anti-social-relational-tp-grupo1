@@ -67,7 +67,8 @@ const {
 
 const { validarUsuarioExiste } = require("../middlewares/validarUsuarioExiste");
 const { validarUsuario } = require("../middlewares/validarDatosUsuario");
-const { validarSeguir } = require("../middlewares/validarSeguir")
+const { validarSeguir } = require("../middlewares/validarSeguir");
+const { validarObjectId } = require("../middlewares/validarObjectId");
 
 /**
  * @swagger
@@ -242,9 +243,9 @@ router.get("/", obtenerTodosLosUsuarios);
  *       500:
  *         description: Error interno del servidor
  */
-router.get("/:id", validarUsuarioExiste, obtenerUsuarioPorId);
-router.put("/:id", validarUsuarioExiste, validarUsuario, actualizarUsuario);
-router.delete("/:id", validarUsuarioExiste, eliminarUsuario);
+router.get("/:id", validarObjectId(), validarUsuarioExiste, obtenerUsuarioPorId);
+router.put("/:id", validarObjectId(), validarUsuarioExiste, validarUsuario, actualizarUsuario);
+router.delete("/:id", validarObjectId(), validarUsuarioExiste, eliminarUsuario);
 
 /**
  * @swagger
@@ -283,6 +284,6 @@ router.delete("/:id", validarUsuarioExiste, eliminarUsuario);
  *       500:
  *         description: Error interno del servidor
  */
-router.post("/:id/seguir", validarUsuarioExiste, validarSeguir, seguirUsuario)
+router.post("/:id/seguir", validarObjectId(), validarUsuarioExiste, validarSeguir, seguirUsuario)
 
 module.exports = router;
