@@ -1,4 +1,4 @@
-const { Usuario } = require("../models");
+const { Usuario, UsuarioAUsuario } = require("../models");
 
 const crearUsuario = async (req, res) => {
   try {
@@ -14,7 +14,7 @@ const crearUsuario = async (req, res) => {
 
 const obtenerTodosLosUsuarios = async (req, res) => {
   try {
-    const usuarios = await Usuario.findAll();
+    const usuarios = await Usuario.find();
     res.status(200).json(usuarios);
   } catch (error) {
     res
@@ -33,11 +33,10 @@ const actualizarUsuario = async (req, res) => {
     const { nickName, email, password } = req.body;
     const usuario = req.usuario;
 
-    await usuario.update({
-      nickName: nickName || usuario.nickName,
-      email: email || usuario.email,
-      password: password || usuario.password,
-    });
+    if (nickName !== undefined) usuario.nickName = nickName;
+    if (email !== undefined) usuario.email = email;
+    if (password !== undefined) usuario.password = password;
+    await usuario.save();
 
     res.status(200).json({ mensaje: "Usuario actualizado con éxito", usuario });
   } catch (error) {
@@ -50,7 +49,8 @@ const actualizarUsuario = async (req, res) => {
 const eliminarUsuario = async (req, res) => {
   try {
     const usuario = req.usuario;
-    await usuario.destroy();
+    usuario.deletedAt = new Date();
+    await usuario.save();
     res.status(200).json({ mensaje: "Usuario eliminado correctamente" });
   } catch (error) {
     res
@@ -63,24 +63,22 @@ const seguirUsuario = async (req, res) => {
   try {
     const usuario = req.usuario;
     const { usuarioId } = req.body;
-    if (usuarioId === usuario.id) {
-      res.status(400).json({ message: "No podes seguirte a vos mismo" })
+    if (usuarioId === usuario._id.toString()) {
+      return res.status(400).json({ message: "No podes seguirte a vos mismo" });
     }
-    const usuarioASeguir = await Usuario.findByPk(usuarioId);
+    const usuarioASeguir = await Usuario.findById(usuarioId);
     if (!usuarioASeguir) {
-      res.status(404).json({ message: "Error: El usuario a seguir no existe" })
+      return res.status(404).json({ message: "Error: El usuario a seguir no existe" });
     }
-    await usuario.addSeguido(usuarioASeguir)
-    res.status(200).json({ message: "Usuario seguido correctamente" })
+    await UsuarioAUsuario.create({ seguidor: usuario._id, seguido: usuarioASeguir._id });
+    res.status(200).json({ message: "Usuario seguido correctamente" });
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        message: "Error al seguir usuario",
-        error: error.message
-      })
+    res.status(500).json({
+      message: "Error al seguir usuario",
+      error: error.message,
+    });
   }
-}
+};
 
 module.exports = {
   crearUsuario,
@@ -88,5 +86,5 @@ module.exports = {
   obtenerUsuarioPorId,
   actualizarUsuario,
   eliminarUsuario,
-  seguirUsuario
+  seguirUsuario,
 };
